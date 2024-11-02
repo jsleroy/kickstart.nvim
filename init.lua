@@ -134,12 +134,101 @@ require('lazy').setup({
   { 'folke/tokyonight.nvim', priority = 1000, },
 
   {
+    "echasnovski/mini.align",
+    keys = { "ga", "gA" },
+    opts = {
+      mappings = {
+        start = "ga",
+        start_with_preview = "gA",
+      },
+    },
+  },
+
+  -- {
+  --   "echasnovski/mini.icons",
+  --   opts = {},
+  --   lazy = true,
+  --   specs = {
+  --     { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+  --   },
+  --   init = function()
+  --     package.preload["nvim-web-devicons"] = function()
+  --       require("mini.icons").mock_nvim_web_devicons()
+  --       return package.loaded["nvim-web-devicons"]
+  --     end
+  --   end,
+  -- },
+
+  -- {
+  --   'nvim-lualine/lualine.nvim',
+  --   config = function()
+  --     local lualine = require 'lualine'
+  --     local icon = require 'nvim-web-devicons'
+  --     local icon = require 'hieulw.icons'
+  --     local mode = "mode"
+  --     local filetype = { "filetype", icon_only = true }
+
+  --     local diagnostics = {
+  --       "diagnostics",
+  --       sources = { "nvim_diagnostic" },
+  --       sections = { "error", "warn", "info", "hint" },
+  --       symbols = {
+  --         error = icon.diagnostics.Error,
+  --         hint = icon.diagnostics.Hint,
+  --         info = icon.diagnostics.Info,
+  --         warn = icon.diagnostics.Warning,
+  --       },
+  --       colored = true,
+  --       update_in_insert = false,
+  --       always_visible = false,
+  --     }
+
+  --     local diff = {
+  --       "diff",
+  --       source = function()
+  --         local gitsigns = vim.b.gitsigns_status_dict
+  --         if gitsigns then
+  --           return {
+  --             added = gitsigns.added,
+  --             modified = gitsigns.changed,
+  --             removed = gitsigns.removed,
+  --           }
+  --         end
+  --       end,
+  --       symbols = {
+  --         added = icon.git.LineAdded .. " ",
+  --         modified = icon.git.LineModified .. " ",
+  --         removed = icon.git.LineRemoved .. " ",
+  --       },
+  --       colored = true,
+  --       always_visible = false,
+  --     }
+
+  --     lualine.setup {
+  --       options = {
+  --         theme = "auto",
+  --         globalstatus = true,
+  --         section_separators = "",
+  --         component_separators = "",
+  --         disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
+  --       },
+  --       sections = {
+  --         lualine_a = { mode },
+  --         lualine_b = {},
+  --         lualine_c = { "filename" },
+  --         lualine_x = { diff, diagnostics, filetype },
+  --         lualine_y = {},
+  --         lualine_z = {},
+  --       },
+  --     }
+  --   end,
+  -- },
+
+  {
     'MeanderingProgrammer/render-markdown.nvim',
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    -- ---@module 'render-markdown'
-    -- ---@type render.md.UserConfig
     opts = {},
   },
 
@@ -250,31 +339,7 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
-      -- The easiest way to use Telescope, is to start by doing something like:
-      --  :Telescope help_tags
-      --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
-      -- Two important keymaps to use while in Telescope are:
-      --  - Insert mode: <c-/>
-      --  - Normal mode: ?
-
-      -- This opens a window that shows you all of the keymaps for the current
-      -- Telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
-
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
@@ -455,10 +520,6 @@ require('lazy').setup({
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
@@ -475,6 +536,13 @@ require('lazy').setup({
         clangd = {},
         -- gopls = {},
         pyright = {},
+        bashls = {},
+        cmake = {},
+        dockerls = {},
+        gitlab_ci_ls = {},
+        jsonls = {},
+        markdown_oxide = {},
+        yamlls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -590,14 +658,9 @@ require('lazy').setup({
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
           ['<CR>'] = cmp.mapping.confirm { select = true },
           ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
@@ -625,7 +688,6 @@ require('lazy').setup({
         sources = {
           {
             name = 'lazydev',
-            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
           { name = 'nvim_lsp' },
@@ -657,25 +719,16 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
       statusline.setup { use_icons = vim.g.have_nerd_font }
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
