@@ -131,9 +131,6 @@ require('lazy').setup({
   'vhda/verilog_systemverilog.vim',
   'lewis6991/gitsigns.nvim',
 
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { 'folke/tokyonight.nvim', priority = 1000, },
-
   {
     "echasnovski/mini.align",
     keys = { "ga", "gA" },
@@ -145,10 +142,21 @@ require('lazy').setup({
     },
   },
 
+
   { 'akinsho/toggleterm.nvim',
     opts = {
       open_mapping = [[<leader>t]],
     }
+  },
+
+  {
+    "vague2k/huez.nvim",
+    import = "huez-manager.import",
+    branch = "stable",
+    event = "UIEnter",
+    config = function()
+      require("huez").setup({})
+    end,
   },
 
   -- {
@@ -800,7 +808,6 @@ require('lazy').setup({
   },
 })
 
--- vim.cmd.colorscheme "catppuccin"
-vim.cmd.colorscheme "tokyonight"
+-- vim.cmd.colorscheme "tokyonight"
 
 -- vim: ts=2 sts=2 sw=2 et
