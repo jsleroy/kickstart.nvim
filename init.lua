@@ -114,12 +114,7 @@ require('lazy').setup({
   'vhda/verilog_systemverilog.vim',
   'lewis6991/gitsigns.nvim',
 
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
+  { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
 
   {
     "echasnovski/mini.align",
@@ -134,7 +129,7 @@ require('lazy').setup({
 
   { 'akinsho/toggleterm.nvim',
     opts = {
-      open_mapping = [[<leader>t]],
+      open_mapping = "<c-t>",
     }
   },
 
@@ -578,6 +573,8 @@ require('lazy').setup({
       indent = { enable = true, disable = { 'ruby' } },
     },
   },
+
+  install = { colorscheme = { "tokyonight" } }
 },
 
 {
