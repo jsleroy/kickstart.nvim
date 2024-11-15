@@ -8,6 +8,7 @@ vim.g.have_nerd_font = true
 -- [[ Setting options ]]
 vim.opt.wrap = false
 vim.opt.textwidth = 80
+vim.opt.cc="81"
 vim.opt.numberwidth = 4   -- (up to 9999)
 vim.opt.scrolloff = 4     -- Minimum number of lines to keep above and below the cursor
 vim.opt.tabstop = 2       -- Number of columns occupied by a tab
@@ -115,6 +116,7 @@ require('lazy').setup({
   'lewis6991/gitsigns.nvim',
 
   { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
+  { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000, opts = {} },
 
   {
     "echasnovski/mini.align",
@@ -330,6 +332,7 @@ require('lazy').setup({
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       --  This function gets run when an LSP attaches to a particular buffer.
@@ -505,6 +508,7 @@ require('lazy').setup({
           },
           { name = 'nvim_lsp' },
           { name = 'path' },
+          { name = 'buffer' },
         },
       }
     end,
@@ -574,7 +578,7 @@ require('lazy').setup({
     },
   },
 
-  install = { colorscheme = { "tokyonight" } }
+  install = { colorscheme = { "catppuccin-mocha" } }
 },
 
 {
@@ -599,6 +603,6 @@ require('lazy').setup({
   },
 })
 
-vim.cmd.colorscheme "tokyonight"
+vim.cmd.colorscheme "catppuccin-mocha"
 
 -- vim: ts=2 sts=2 sw=2 et
