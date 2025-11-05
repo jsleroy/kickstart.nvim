@@ -109,7 +109,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'vim-scripts/Mark--Karkat', -- Highlight words using different colors
+  'Pocco81/HighStr.nvim',
   'kylelaker/riscv.vim',
   'dcharbon/vim-flatbuffers',
   'vhda/verilog_systemverilog.vim',
@@ -196,44 +196,58 @@ require('lazy').setup({
   },
 
   {
-    'nvim-neo-tree/neo-tree.nvim',
-    version = '*',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'MunifTanjim/nui.nvim',
-    },
-    cmd = 'Neotree',
-    keys = {
-      { '\\', ':Neotree reveal_force_cwd<CR>', desc = 'NeoTree reveal', silent = true },
-    },
-    opts = {
-      sources = { "filesystem", "buffers", "git_status" },
-      open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
-      filesystem = {
-        bind_to_cwd = false,
-        follow_current_file = { enabled = true },
-        use_libuv_file_watcher = true,
-        filtered_items = {
-          visible = true,
-          show_hidden_count = true,
-          hide_dotfiles = false,
-          hide_gitignored = false,
-          hide_by_name = {
-            -- '.git',
-            -- '.DS_Store',
-            -- 'thumbs.db',
-          },
-          never_show = {},
-        },
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-tree/nvim-web-devicons", -- optional, but recommended
       },
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
-        },
-      },
-    },
+      lazy = false, -- neo-tree will lazily load itself
+    }
   },
+
+  -- {
+  --   'nvim-neo-tree/neo-tree.nvim',
+  --   version = '*',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-tree/nvim-web-devicons',
+  --     'MunifTanjim/nui.nvim',
+  --   },
+  --   cmd = 'Neotree',
+  --   keys = {
+  --     { '<leader>x', ':Neotree toggle<CR>', desc = 'NeoTree toggle', silent = true },
+  --   },
+  --   opts = {
+  --     sources = { "filesystem", "buffers", "git_status" },
+  --     open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+  --     filesystem = {
+  --       bind_to_cwd = false,
+  --       follow_current_file = { enabled = true },
+  --       use_libuv_file_watcher = true,
+  --       filtered_items = {
+  --         visible = true,
+  --         show_hidden_count = true,
+  --         hide_dotfiles = false,
+  --         hide_gitignored = false,
+  --         hide_by_name = {
+  --           -- '.git',
+  --           -- '.DS_Store',
+  --           -- 'thumbs.db',
+  --         },
+  --         never_show = {},
+  --       },
+  --     },
+  --     window = {
+  --       mappings = {
+  --         -- Remove this line, as it overrides <leader>e inside the Neo-tree window
+  --         -- ['<leader>e'] = 'close_window',
+  --       },
+  --     },
+  --   },
+  -- },
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
